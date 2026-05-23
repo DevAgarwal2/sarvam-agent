@@ -1,0 +1,29 @@
+services:
+  hermes-1:
+    image: nousresearch/hermes-agent:latest
+    container_name: hermes-1
+    restart: unless-stopped
+    command: gateway run
+    ports:
+      - "8642:8642"         # Gateway API
+      - "9119:9119"         # Dashboard (optional)
+    volumes:
+      - .:/opt/data
+    environment:
+      - HERMES_UID=${HERMES_UID:-10000}
+      - HERMES_GID=${HERMES_GID:-10000}
+      - SARVAM_API_KEY=${SARVAM_API_KEY}
+      - MISTRAL_API_KEY=${MISTRAL_API_KEY}
+      - HERMES_LOCAL_STT_COMMAND=python3 /opt/data/skills/sarvam/scripts/stt_bridge.py {input_path} {output_dir} {model} {language}
+      - AGENT_BROWSER_EXECUTABLE_PATH=/opt/hermes/.playwright/chromium_headless_shell-1223/chrome-linux/headless_shell
+    deploy:
+      resources:
+        limits:
+          memory: 4G
+          cpus: "2.0"
+
+  # Optional: add more instances by duplicating the block above
+  # hermes-2:
+  #   image: nousresearch/hermes-agent:latest
+  #   container_name: hermes-2
+  #   ...
