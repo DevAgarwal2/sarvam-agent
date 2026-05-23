@@ -1,0 +1,9 @@
+{
+  "product_name": "Basmati Rice",
+  "product_code": "RICE-001",
+  "price_per_kg": 50.0,
+  "quantity_kg": 10,
+  "total_amount": 500.0,
+  "customer_name": "Rahul",
+  "customer_email": "rahul@example.com"
+}
